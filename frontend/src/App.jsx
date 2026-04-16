@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import HistoryPanel from './HistoryPanel';
 import './App.css';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:8000' : '/_/backend';
 
 // Emotion → emoji + color
 const EMOTION_EMOJI = {
@@ -772,7 +772,7 @@ export default function App() {
         {' '}·{' '}
         <a href="https://github.com/manish-9245/Facial-Emotion-Recognition-using-OpenCV-and-Deepface" className="footer-link" target="_blank" rel="noreferrer">DeepFace-ONNX</a>
         {' '}·{' '}
-        <a href="http://localhost:8000/docs" className="footer-link" target="_blank" rel="noreferrer">API Docs</a>
+        <a href={`${API_BASE}/docs`} className="footer-link" target="_blank" rel="noreferrer">API Docs</a>
         {' '}· FaceNetra v3.0
       </footer>
 

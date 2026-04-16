@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:8000' : '/_/backend';
 
 const EMOTION_EMOJI = {
   angry: '😠', disgust: '🤢', fear: '😨',

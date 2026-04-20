@@ -322,7 +322,7 @@ def process_image(img: np.ndarray, source: str = "image", privacy_mode: bool = F
 
 
 # ── Routes ───────────────────────────────────────────────────────────────────
-@app.get("/health")
+@app.get("/health", methods=["GET", "HEAD"])
 async def health():
     return {
         "status":           "ok",

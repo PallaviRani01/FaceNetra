@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import HistoryPanel from './HistoryPanel';
 import './App.css';
 
-const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:8000' : '/_/backend';
+const API_BASE = import.meta.env.VITE_API_BASE || (window.location.hostname === 'localhost' ? 'http://localhost:8000' : '');
 
 // Emotion → emoji + color
 const EMOTION_EMOJI = {
@@ -342,7 +342,15 @@ function UploadPanel({ onResult, mode, privacyMode }) {
           drawFacesOnCanvas(cvs, data.faces, img.naturalWidth, img.naturalHeight, mode);
         }
       }, 150);
-    } catch(e) { setError(`${e.message} — Is the backend running?`); }
+    } catch(e) { 
+      let msg = e.message;
+      if (msg.includes('405') && window.location.hostname !== 'localhost' && !import.meta.env.VITE_API_BASE) {
+        msg = "Deployment Error (405): You are on Vercel but haven't set VITE_API_BASE. The backend cannot run on Vercel!";
+      } else {
+        msg = `${e.message} — Is the backend running?`;
+      }
+      setError(msg); 
+    }
     finally    { setProcessing(false); }
   }, [onResult, mode, privacyMode]);
 
